@@ -1,0 +1,19 @@
+game_builder:
+    path: /game-builder
+    controller: App\Controller\GameBuilderController::gameBuilder
+    methods: GET
+
+game_builder_editor:
+    path: /game-builder/editor
+    controller: App\Controller\GameBuilderController::gameBuilderEditor
+    methods: GET
+
+game_builder_sandbox:
+    path: /game-builder/sandbox
+    controller: App\Controller\GameBuilderController::gameBuilderSandbox
+    methods: GET
+
+game_builder_export:
+    path: /game-builder/export
+    controller: App\Controller\GameBuilderController::exportNewPuzzle
+    methods: POST
