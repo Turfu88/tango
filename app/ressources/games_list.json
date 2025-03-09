@@ -5,7 +5,8 @@
         "game_4_3"
     ],
     "grid_6x6": [
-        "game_6_1"
+        "game_6_1",
+        "game_6_2"
     ],
     "grid_8x8": [
         "game_8_1"

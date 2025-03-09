@@ -1,7 +1,7 @@
-import { Tile } from "@/types/Tile.model"
+import { Tile } from '@/types/Tile.model';
 import { TileResolver } from '@/lib/builder/tileResolverHelper';
-import { VirtualMove } from "@/types/VirtualMove.model";
-import { PatternList } from "@/types/PatternList.model";
+import { VirtualMove } from '@/types/VirtualMove.model';
+import { PatternList } from '@/types/PatternList.model';
 
 export const patterns_4x4: PatternList = {
     // [ · | X | X | · ]
@@ -362,11 +362,12 @@ export const patterns_4x4: PatternList = {
     maxSymbolReached(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null  {
         const methodUsed = 'maxSymbolReached';
         const methodComplexity = 'E'; // Easy
+        const tilesLimit = rowToCheck.length / 2;
         const emptyTiles = rowToCheck.filter(tile => tile.value === 0);
         const tilesCountWithFirstValue = rowToCheck.filter(tile => tile.value === 1).length;
         const tilesCountWithSecondValue = rowToCheck.filter(tile => tile.value === 2).length;
         // Si il y a un symbole manquant et que l'on a deux symboles identique
-        if (emptyTiles.length > 0 && tilesCountWithFirstValue === 2) {
+        if (emptyTiles.length > 0 && tilesCountWithFirstValue === tilesLimit) {
             return {
                 methodUsed,
                 methodComplexity,
@@ -375,7 +376,7 @@ export const patterns_4x4: PatternList = {
                 value: 2
             };
         }
-        if (emptyTiles.length > 0 && tilesCountWithSecondValue === 2) {
+        if (emptyTiles.length > 0 && tilesCountWithSecondValue === tilesLimit) {
             return {
                 methodUsed,
                 methodComplexity,

@@ -17,7 +17,7 @@ export const TileResolver = {
             const splitTilesGrid = this.getSplitTilesGrid(tiles, grid);
 
             for (const row of splitTilesGrid) {
-                const dimension = splitTilesGrid.indexOf(row) < grid / 2 ? 'h' : 'v';
+                const dimension = splitTilesGrid.indexOf(row) < splitTilesGrid.length / 2 ? 'h' : 'v';
                 for (const [, pattern] of Object.entries(patternsToTry)) {
                     if (typeof pattern === 'function') {
                         const solution = pattern(row, dimension);
