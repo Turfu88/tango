@@ -82,6 +82,7 @@ body {
     flex-direction: column;
     justify-content: center;
     height: 100vh;
+    padding: 20px 5px;
 }
 
 @media (min-width: 768px) {
@@ -259,7 +260,7 @@ h1 {
 
 
 .constraint-vertical-4 img {
-    top: calc(82vw / 4);
+    top: calc(78vw / 4);
     right: 0;
 }
 
