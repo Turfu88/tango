@@ -101,7 +101,7 @@ export function GameEditor() {
                 <div style={{ width: '30%' }} className={`virtual_constraints grid-${gameBuilder.grid}`}>
                     <VirtualBoard board={gameBuilder} />
                 </div>
-                <div className="border rounded-md p-2" style={{ width: '25%', minHeight: '580px' }}>
+                <div className="border rounded-md p-2" style={{ width: '25%', minHeight: '580px', maxHeight: '650px' }}>
                     <p className="text-center font-bold">Actions devinées</p>
                     {gameBuilder.virtualHistory.map((virtualMove: VirtualMove, index: number) => (
                         <p key={index}>
