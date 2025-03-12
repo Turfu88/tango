@@ -3,7 +3,7 @@ import { TileResolver } from '@/lib/builder/tileResolverHelper';
 import { VirtualMove } from '@/types/VirtualMove.model';
 import { PatternList } from '@/types/PatternList.model';
 
-export const patterns_6x6: PatternList = {
+export const patterns_8x8: PatternList = {
     // [ · | X | X | · ]
     twoAsides(row: Tile[], dimension: 'h' | 'v'): VirtualMove | null {
         const methodUsed = 'twoAsides';
@@ -211,7 +211,7 @@ export const patterns_6x6: PatternList = {
         const emptyTiles = rowToCheck.filter(tile => tile.value === 0);
         const tilesCountWithFirstValue = rowToCheck.filter(tile => tile.value === 1).length;
         const tilesCountWithSecondValue = rowToCheck.filter(tile => tile.value === 2).length;
-        // Si il y a un symbole manquant et que l'on a deux symboles identique
+        // Si il y a un symbole manquant et que l'on a deux symboles identiques
         if (emptyTiles.length > 0 && tilesCountWithFirstValue === tilesLimit) {
             return {
                 methodUsed,
@@ -317,31 +317,31 @@ export const patterns_6x6: PatternList = {
         }
         return null;
     },
-    // [ X | X | O |   |   | · ]
-    halfFilled(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null  {
-        const methodUsed = 'halfFilled';
-        const methodComplexity = 'D'; // Difficult
-        if (rowToCheck[0].value !== 0 && rowToCheck[2].value !== 0 && rowToCheck[5].value === 0 && rowToCheck[0].value === rowToCheck[1].value && rowToCheck[0].value !== rowToCheck[2].value) {
-            return {
-                methodUsed,
-                methodComplexity,
-                dimension,
-                tileId: rowToCheck[5].id,
-                value: TileResolver.getOpositeTileValue(rowToCheck[0])
-            };
-        }
-        if (rowToCheck[5].value !== 0 && rowToCheck[3].value !== 0 && rowToCheck[0].value === 0 && rowToCheck[5].value === rowToCheck[4].value && rowToCheck[5].value !== rowToCheck[3].value) {
-            return {
-                methodUsed,
-                methodComplexity,
-                dimension,
-                tileId: rowToCheck[0].id,
-                value: TileResolver.getOpositeTileValue(rowToCheck[5])
-            };
-        }
+    // // [ X | X | O |   |   | · ]
+    // halfFilled(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null  {
+    //     const methodUsed = 'halfFilled';
+    //     const methodComplexity = 'D'; // Difficult
+    //     if (rowToCheck[0].value !== 0 && rowToCheck[2].value !== 0 && rowToCheck[5].value === 0 && rowToCheck[0].value === rowToCheck[1].value && rowToCheck[0].value !== rowToCheck[2].value) {
+    //         return {
+    //             methodUsed,
+    //             methodComplexity,
+    //             dimension,
+    //             tileId: rowToCheck[5].id,
+    //             value: TileResolver.getOpositeTileValue(rowToCheck[0])
+    //         };
+    //     }
+    //     if (rowToCheck[5].value !== 0 && rowToCheck[3].value !== 0 && rowToCheck[0].value === 0 && rowToCheck[5].value === rowToCheck[4].value && rowToCheck[5].value !== rowToCheck[3].value) {
+    //         return {
+    //             methodUsed,
+    //             methodComplexity,
+    //             dimension,
+    //             tileId: rowToCheck[0].id,
+    //             value: TileResolver.getOpositeTileValue(rowToCheck[5])
+    //         };
+    //     }
 
-        return null;
-    },
+    //     return null;
+    // },
     // [ X |   | · |   x   | X ]
     maxSymbolReachedWithOneReversed(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null  {
         const methodUsed = 'maxSymbolReachedWithOneReversed';

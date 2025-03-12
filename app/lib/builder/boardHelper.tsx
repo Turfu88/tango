@@ -7,6 +7,8 @@ import games_list from '@/ressources/games_list.json';
 import { GameBuilderAction } from "@/reducers/builder/gameBuilderReducer";
 import { Tile } from "@/types/Tile.model";
 import { VirtualMove } from "@/types/VirtualMove.model";
+import { errorHelper } from '@/lib/errorHelper';
+import { Tile as TileType } from '@/types/Tile.model';
 
 const gameData_4x4: BoardBuilderType = board_4x4 as BoardBuilderType;
 const gameData_6x6: BoardBuilderType = board_6x6 as BoardBuilderType;
@@ -82,10 +84,45 @@ export const BoardUtils = {
             return tile;
         });
     },
-    puzzleHasBeenResolved(tiles: Tile[], virtualTiles: VirtualMove[], grid: number): boolean {
+    searchErrors(virtualTiles: Tile[], grid: number) {
+        const tiles = virtualTiles.map((tile: TileType) => {
+            tile.isError = false;
+            return tile;
+        })
+        const splitTilesGrid = this.getSplitTilesGrid(tiles, grid);
+        const wrongTiles = errorHelper.getErrorsFrom3SymbolsRule(splitTilesGrid);
+        const wrongTiles2 = errorHelper.getErrorsFromPairedSymbolsRule(splitTilesGrid, grid);
+        const wrongTiles3 = errorHelper.getErrorsFromEqualityRule(splitTilesGrid);
+        const allwrongTiles = [...wrongTiles, ...wrongTiles2, ...wrongTiles3];
+
+        return tiles.map((tile: TileType) => {
+            if (allwrongTiles.includes(tile.id)) {
+                tile.isError = true;
+            }
+            return tile;
+        });
+    },
+    getSplitTilesGrid(tiles: Tile[], grid: number): TileType[][] {
+        let rows = [];
+
+        for (let i = 0; i < tiles.length; i += grid) {
+            rows.push(tiles.slice(i, i + grid));
+        }
+
+        const columns: TileType[][] = Array.from({ length: grid }, () => [] as TileType[]);
+
+        for (let i = 0; i < tiles.length; i++) {
+            const columnIndex = i % grid;
+            columns[columnIndex].push(tiles[i]);
+        }
+
+        return [...rows, ...columns];
+    },
+    puzzleHasBeenResolved(tiles: Tile[], virtualHistory: VirtualMove[], grid: number, virtualTiles: Tile[],): boolean {
+        const hasErrors = virtualTiles.some((tile) => tile.isError);
         const tilesWithConstraints = tiles.filter((tile) => tile.value !== 0).length;
-        const virtualTilesSolved = virtualTiles.length;
-        return grid * grid === tilesWithConstraints + virtualTilesSolved;
+        const virtualTilesSolved = virtualHistory.length;
+        return grid * grid === tilesWithConstraints + virtualTilesSolved && !hasErrors;
     },
     createBoardFrom(board: BoardBuilderType): BoardType {
         const tiles = board.tiles.map((tile) => {

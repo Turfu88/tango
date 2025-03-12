@@ -3,11 +3,15 @@ import { Tile } from "@/types/Tile.model";
 import { patterns_4x4 } from '@/lib/builder/patterns_4x4';
 import { VirtualMove } from "@/types/VirtualMove.model";
 import { patterns_6x6 } from '@/lib/builder/patterns_6x6';
+import { patterns_8x8 } from '@/lib/builder/patterns_8x8';
 
 export const TileResolver = {
 
     resolveTilesValues(tiles: Tile[], grid: number, history: VirtualMove[]): [Tile[], VirtualMove[]] {
         let patternsToTry = patterns_4x4;
+        if (grid === 8) {
+            patternsToTry = patterns_8x8;
+        }
         if (grid === 6) {
             patternsToTry = patterns_6x6;
         }

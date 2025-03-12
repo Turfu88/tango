@@ -28,6 +28,35 @@ export const patterns_4x4: PatternList = {
 
         return findSolution(row) ?? findSolution([...row].reverse());
     },
+    maxSymbolReached(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null  {
+        const methodUsed = 'maxSymbolReached';
+        const methodComplexity = 'E'; // Easy
+        const tilesLimit = rowToCheck.length / 2;
+        const emptyTiles = rowToCheck.filter(tile => tile.value === 0);
+        const tilesCountWithFirstValue = rowToCheck.filter(tile => tile.value === 1).length;
+        const tilesCountWithSecondValue = rowToCheck.filter(tile => tile.value === 2).length;
+        // Si il y a un symbole manquant et que l'on a deux symboles identique
+        if (emptyTiles.length > 0 && tilesCountWithFirstValue === tilesLimit) {
+            return {
+                methodUsed,
+                methodComplexity,
+                dimension,
+                tileId: emptyTiles[0].id,
+                value: 2
+            };
+        }
+        if (emptyTiles.length > 0 && tilesCountWithSecondValue === tilesLimit) {
+            return {
+                methodUsed,
+                methodComplexity,
+                dimension,
+                tileId: emptyTiles[0].id,
+                value: 1
+            };
+        }
+
+        return null;
+    },
     // [ · = X |  |  ]    -    [ X = · |  |  ]
     equalSimple(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null {
         const methodUsed = 'equalSimple';
@@ -256,134 +285,50 @@ export const patterns_4x4: PatternList = {
         return null;
     },
     // [ X | · x  |  |  ]    -    [  |  x ·| X ]
-    reversedClose(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null {
-        const methodUsed = 'reverseClose';
+    reversedClose(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null  {
+        const methodUsed = 'maxSymbolReachedWithOneReversed';
         const methodComplexity = 'D'; // Difficult
-
-        for (let index = 0; index < rowToCheck.length - 3; index++) {
-            const rowIsHorizontal = rowToCheck[index].id + 1 === rowToCheck[index + 1].id || rowToCheck[index].id - 1 === rowToCheck[index + 1].id;
-            if (rowIsHorizontal && rowToCheck[index].value !== 0 && rowToCheck[index + 3].value === 0 &&
-                rowToCheck[index + 1].horizontalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index + 3].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index])
-                };
-            }
-            if (rowIsHorizontal && rowToCheck[index + 3].value !== 0 && rowToCheck[index].value === 0 &&
-                rowToCheck[index + 1].horizontalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index + 3])
-                };
-            }
-
-            if (!rowIsHorizontal && rowToCheck[index].value !== 0 && rowToCheck[index + 3].value === 0 &&
-                rowToCheck[index + 1].verticalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index + 3].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index])
-                };
-            }
-            if (!rowIsHorizontal && rowToCheck[index + 3].value !== 0 && rowToCheck[index].value === 0 &&
-                rowToCheck[index + 1].verticalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index + 3])
-                };
-            }
-        }
-
-        return null;
-    },
-    // [ X | · |  x  ]    -    [  x  | · | X ]
-    reversedFar(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null {
-        const methodUsed = 'reverseFar';
-        const methodComplexity = 'D'; // Difficult
-
-        for (let index = 0; index < rowToCheck.length - 3; index++) {
-            const rowIsHorizontal = rowToCheck[index].id + 1 === rowToCheck[index + 1].id || rowToCheck[index].id - 1 === rowToCheck[index + 1].id;
-            if (rowIsHorizontal && rowToCheck[index].value !== 0 && rowToCheck[index + 1].value === 0 &&
-                rowToCheck[index + 2].horizontalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index + 1].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index])
-                };
-            }
-            if (rowIsHorizontal && rowToCheck[index + 3].value !== 0 && rowToCheck[index + 2].value === 0 &&
-                rowToCheck[index].horizontalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index + 2].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index + 3])
-                };
-            }
-
-            if (!rowIsHorizontal && rowToCheck[index].value !== 0 && rowToCheck[index + 1].value === 0 &&
-                rowToCheck[index + 2].verticalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index + 1].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index])
-                };
-            }
-            if (!rowIsHorizontal && rowToCheck[index + 3].value !== 0 && rowToCheck[index + 2].value === 0 &&
-                rowToCheck[index].verticalConstraint === 'reversed') {
-                return {
-                    methodUsed,
-                    methodComplexity,
-                    dimension,
-                    tileId: rowToCheck[index + 2].id,
-                    value: TileResolver.getOpositeTileValue(rowToCheck[index + 3])
-                };
-            }
-        }
-
-        return null;
-    },
-    maxSymbolReached(rowToCheck: Tile[], dimension: 'h' | 'v'): VirtualMove | null  {
-        const methodUsed = 'maxSymbolReached';
-        const methodComplexity = 'E'; // Easy
-        const tilesLimit = rowToCheck.length / 2;
+        const tilesLimit = 1;
         const emptyTiles = rowToCheck.filter(tile => tile.value === 0);
-        const tilesCountWithFirstValue = rowToCheck.filter(tile => tile.value === 1).length;
-        const tilesCountWithSecondValue = rowToCheck.filter(tile => tile.value === 2).length;
-        // Si il y a un symbole manquant et que l'on a deux symboles identique
-        if (emptyTiles.length > 0 && tilesCountWithFirstValue === tilesLimit) {
-            return {
-                methodUsed,
-                methodComplexity,
-                dimension,
-                tileId: emptyTiles[0].id,
-                value: 2
-            };
+        const tilesContainingEmptyReversed = rowToCheck.filter(tile => (tile.horizontalConstraint === 'reversed' || tile.verticalConstraint === 'reversed') && tile.value === 0);
+        if (emptyTiles.length > 1 && tilesContainingEmptyReversed.length !== 1) return null;
+
+        const tilesWithFirstValue = rowToCheck.filter(tile => tile.value === 1);
+        const tilesWithSecondValue = rowToCheck.filter(tile => tile.value === 2);
+        let tilesWithEmptyReversed = [];
+        for (let index = 0; index < rowToCheck.length - 1; index++) {
+            if (rowToCheck[index].horizontalConstraint === 'reversed' || rowToCheck[index].verticalConstraint === 'reversed') {
+                tilesWithEmptyReversed.push(rowToCheck[index].id);
+                tilesWithEmptyReversed.push(rowToCheck[index + 1].id);
+            }
         }
-        if (emptyTiles.length > 0 && tilesCountWithSecondValue === tilesLimit) {
-            return {
-                methodUsed,
-                methodComplexity,
-                dimension,
-                tileId: emptyTiles[0].id,
-                value: 1
-            };
+        if (tilesWithFirstValue.length === tilesLimit) {
+            let filteredTiles = rowToCheck.filter(tile => !tilesWithEmptyReversed.includes(tile.id));
+            filteredTiles = filteredTiles.filter(tile => !tilesWithFirstValue.map(tile => tile.id).includes(tile.id));
+            const filteredTiles2 = filteredTiles.filter(tile => !tilesWithSecondValue.map(tile => tile.id).includes(tile.id));
+            if (filteredTiles2.length > 0 && filteredTiles2[0].value === 0) {
+                return {
+                    methodUsed,
+                    methodComplexity,
+                    dimension,
+                    tileId: filteredTiles2[0].id,
+                    value: TileResolver.getOpositeTileValue(tilesWithFirstValue[0])
+                };
+            }
+        }
+        if (tilesWithSecondValue.length === tilesLimit) {
+            let filteredTiles = rowToCheck.filter(tile => !tilesWithEmptyReversed.includes(tile.id));
+            filteredTiles = filteredTiles.filter(tile => !tilesWithSecondValue.map(tile => tile.id).includes(tile.id));
+            const filteredTiles2 = filteredTiles.filter(tile => !tilesWithFirstValue.map(tile => tile.id).includes(tile.id));
+            if (filteredTiles2.length > 0 && filteredTiles2[0].value === 0) {
+                return {
+                    methodUsed,
+                    methodComplexity,
+                    dimension,
+                    tileId: filteredTiles2[0].id,
+                    value: TileResolver.getOpositeTileValue(tilesWithSecondValue[0])
+                };
+            }
         }
 
         return null;

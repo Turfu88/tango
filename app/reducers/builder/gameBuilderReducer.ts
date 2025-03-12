@@ -37,8 +37,10 @@ export function gameBuilderReducer(boardBuilder: BoardBuilder, action: GameBuild
                         : { ...virtualTile };
                 });
             
-                const [virtualTiles, virtualHistory] = TileResolver.resolveTilesValues(virtualTilesInitial, boardBuilder.grid, boardBuilder.virtualHistory);
-                const isSolvable = BoardUtils.puzzleHasBeenResolved(tiles, virtualHistory, boardBuilder.grid);
+                let [virtualTiles, virtualHistory] = TileResolver.resolveTilesValues(virtualTilesInitial, boardBuilder.grid, boardBuilder.virtualHistory);
+                virtualTiles = BoardUtils.searchErrors(virtualTiles, boardBuilder.grid);
+
+                const isSolvable = BoardUtils.puzzleHasBeenResolved(tiles, virtualHistory, boardBuilder.grid, virtualTiles);
 
                 return {
                     ...boardBuilder, tiles, virtualTiles, virtualHistory, isSolvable

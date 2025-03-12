@@ -20,6 +20,6 @@ export default function Icon({ name, size }: { name: string, size: string }) {
         return <></>; // fallback
     }
 
-    return <img src={iconSrc} className={`icon icon-${size} no-select`} alt={name} />;
+    return <img src={iconSrc} className={`icon icon-${size} no-select inline`} alt={name} />;
 }
 
