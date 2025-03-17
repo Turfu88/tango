@@ -348,18 +348,19 @@ export const patterns_6x6: PatternList = {
         const methodComplexity = 'D'; // Difficult
         const tilesLimit = 2;
         const emptyTiles = rowToCheck.filter(tile => tile.value === 0);
-        const tilesContainingEmptyReversed = rowToCheck.filter(tile => (tile.horizontalConstraint === 'reversed' || tile.verticalConstraint === 'reversed') && tile.value === 0);
+        const tilesContainingEmptyReversed = rowToCheck.filter(tile => ((tile.horizontalConstraint === 'reversed' && dimension === 'h') || (tile.verticalConstraint === 'reversed' && dimension === 'v' )) && tile.value === 0);
         if (emptyTiles.length > 1 && tilesContainingEmptyReversed.length !== 1) return null;
 
         const tilesWithFirstValue = rowToCheck.filter(tile => tile.value === 1);
         const tilesWithSecondValue = rowToCheck.filter(tile => tile.value === 2);
         let tilesWithEmptyReversed = [];
         for (let index = 0; index < rowToCheck.length - 1; index++) {
-            if (rowToCheck[index].horizontalConstraint === 'reversed' || rowToCheck[index].verticalConstraint === 'reversed') {
+            if ((rowToCheck[index].horizontalConstraint === 'reversed' && dimension === 'h') || (rowToCheck[index].verticalConstraint === 'reversed' && dimension === 'v')) {
                 tilesWithEmptyReversed.push(rowToCheck[index].id);
                 tilesWithEmptyReversed.push(rowToCheck[index + 1].id);
             }
         }
+        console.log({tilesWithEmptyReversed})
         if (tilesWithFirstValue.length === tilesLimit) {
             let filteredTiles = rowToCheck.filter(tile => !tilesWithEmptyReversed.includes(tile.id));
             filteredTiles = filteredTiles.filter(tile => !tilesWithFirstValue.map(tile => tile.id).includes(tile.id));
