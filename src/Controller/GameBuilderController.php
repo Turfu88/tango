@@ -84,7 +84,7 @@ class GameBuilderController extends AbstractController
         // Réécriture du fichier games_list.json
         file_put_contents($gamesListPath, json_encode($gamesList, JSON_PRETTY_PRINT));
 
-        return new JsonResponse('ok');
+        return new JsonResponse($gridType . "_" . $gameId);
     }
    
 }

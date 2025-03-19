@@ -158,13 +158,12 @@ export const BoardUtils = {
         const lastGame = gameData[gameData.length - 1];
         return (parseInt(lastGame.split('_')[2]) + 1);
     },
-    async sendBoardToBackForExport(board: BoardType): Promise<void> {
-        await fetch('/game-builder/export', {
+    async sendBoardToBackForExport(board: BoardType): Promise<string> {
+        const response = await fetch('/game-builder/export', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify(board),
         })
+        return await response.json();
     }
 };

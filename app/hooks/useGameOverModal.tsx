@@ -23,9 +23,9 @@ const useGameOverModal = (board: Board) => {
                 <SheetDescription className='hidden'>Jeu terminé</SheetDescription>
             </SheetHeader>
             <DialogContent>
-                <DialogTitle>Game Over</DialogTitle>
-                <p>The game has ended. Try again?</p>
-                <Button onClick={closeModal}>Close</Button>
+                <DialogTitle>Puzzle réussi</DialogTitle>
+                <p>Félicitations !!!</p>
+                <Button onClick={closeModal}>Fermer</Button>
             </DialogContent>
         </Dialog>
     );

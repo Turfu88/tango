@@ -2,7 +2,7 @@ import { Button } from '@/components/ui/button';
 import Icon from '@/components/Icon';
 import Board from '@/components/Board';
 import VirtualBoard from '@/components/VirtualBoard';
-import { useReducer } from 'react';
+import { useReducer, useState } from 'react';
 import { gameBuilderReducer } from '@/reducers/builder/gameBuilderReducer';
 import { BoardUtils } from '@/lib/builder/boardHelper';
 import { VirtualMove } from '@/types/VirtualMove.model';
@@ -12,9 +12,18 @@ export function GameEditor() {
     const gameData = BoardUtils.init();
 
     const [gameBuilder, dispatch] = useReducer(gameBuilderReducer, gameData);
+    const [newGameLink, setNewGameLink] = useState('');
 
     function handleAction(tileId: number): void {
         dispatch({ action: 'apply_restriction', tileId })
+    }
+
+    async function exportgame() {
+        const newBoard = BoardUtils.createBoardFrom(gameBuilder);
+        console.log({ newBoard })
+        const newGame = await BoardUtils.sendBoardToBackForExport(newBoard);
+        console.log({ newGame });
+        setNewGameLink(() => `/?game=${newGame}`)
     }
 
     return (
@@ -26,10 +35,17 @@ export function GameEditor() {
                     </a>
                 </div>
                 <p className="text-center font-bold">Game builder editor</p>
-                <div className='flex justify-between'>
-                    <Button disabled={!gameBuilder.isSolvable} onClick={() => dispatch({ action: 'export_game' })}>
+                <div className='flex flex-col'>
+                    <Button disabled={!gameBuilder.isSolvable} onClick={exportgame}>
                         Exporter
                     </Button>
+                    {newGameLink !== '' &&
+                        <a href={newGameLink}>
+                            <Button className="mt-4">
+                                Tester puzzle
+                            </Button>
+                        </a>
+                    }
                 </div>
             </div>
             <div className="border rounded-md p-2 bg-white flex gap-4 mx-auto mb-4" style={{ width: 'fit-content' }}>
@@ -104,8 +120,8 @@ export function GameEditor() {
                 <div className="border rounded-md p-2" style={{ width: '25%', minHeight: '580px', maxHeight: '650px' }}>
                     <p className="text-center font-bold">Actions devinées</p>
                     {gameBuilder.virtualHistory.map((virtualMove: VirtualMove, index: number) => (
-                        <p key={index}>
-                            {virtualMove.tileId} - <span className="uppercase">{virtualMove.dimension}</span> - {virtualMove.methodUsed}
+                        <p key={index} style={{fontSize: '10px'}}>
+                            {virtualMove.tileId} - <span className="uppercase">{virtualMove.dimension}</span> - {virtualMove.value} - {virtualMove.methodUsed}
                         </p>
                     ))}
                 </div>

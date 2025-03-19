@@ -360,7 +360,7 @@ export const patterns_6x6: PatternList = {
                 tilesWithEmptyReversed.push(rowToCheck[index + 1].id);
             }
         }
-        console.log({tilesWithEmptyReversed})
+
         if (tilesWithFirstValue.length === tilesLimit) {
             let filteredTiles = rowToCheck.filter(tile => !tilesWithEmptyReversed.includes(tile.id));
             filteredTiles = filteredTiles.filter(tile => !tilesWithFirstValue.map(tile => tile.id).includes(tile.id));

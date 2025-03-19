@@ -12,6 +12,16 @@ export function getCurrentgame(): string {
     return gameFromStorage;
 }
 
+export function getNextGame(): string | null {
+    let gameFromUrl = new URLSearchParams(window.location.search).get('game');
+    if (gameFromUrl === null) return null;
+    const currentGrid = parseInt(gameFromUrl.split('_')[0])
+    const currentGame = parseInt(gameFromUrl.split('_')[1]);
+    const newGame = `game_${currentGrid}_${currentGame + 1}`;
+    if (!gameExists(newGame)) return null;
+    return newGame;
+}
+
 export function setCurrentGame(game: string): void {
     let urlParams = new URLSearchParams(window.location.search);
     urlParams.set('game', game.replace('game_', ''));

@@ -9,13 +9,12 @@ import useGameOverModal from '@/hooks/useGameOverModal';
 import useGameRulesModal from '@/hooks/useGameRulesModal';
 import useThemeModal from '@/hooks/useThemeModal';
 import useGameChoiceModal from '@/hooks/useGameChoiceModal';
-import { getCurrentgame, setCurrentGame } from '@/lib/gameHelper';
+import { getCurrentgame, setCurrentGame, getNextGame } from '@/lib/gameHelper';
 const gameData: BoardType = game_4_1 as BoardType;
 
 
 // Quand on aura plus de parties jouables :
-// Dans le carousel, afficher la page contenant la partie en cours
-// Dans la modale de game over, proposer la partie suivante avec un message de félicitation plus chaleureux
+// Dans le carousel, afficher la page contenant la partie en cours (voire même la partie actuelle)
 
 // Télécharger un jeu avec fetch
 // Ajouter un bouton permettant d'obtenir un indice et mettant en surbrillance une cellule d'une colonne ou rangée
@@ -29,6 +28,7 @@ export function GameArea() {
     const { GameRulesModal, openGameRulesModal } = useGameRulesModal();
     const { GameChoiceModal, openGameChoiceModal, selectedGame } = useGameChoiceModal();
     const { ThemeModal, openThemeModal } = useThemeModal();
+    const nextGame = getNextGame();
 
     const changeGame = async (gamePath: string) => {
         try {
@@ -47,7 +47,7 @@ export function GameArea() {
     function handleUndoMove(): void {
         dispatch({ action: 'undo_change_tile' });
     }
-    
+
     function handleResetGame(): void {
         dispatch({ action: 'reset_game' });
     }
@@ -58,6 +58,13 @@ export function GameArea() {
 
     function handleSearchErrors(): void {
         dispatch({ action: 'search_errors' });
+    }
+
+    function handleSetNextGame(): void {
+        console.log('set next game')
+        if (nextGame !== null) {
+            changeGame(nextGame);
+        }
     }
 
     useEffect(() => {
@@ -89,6 +96,13 @@ export function GameArea() {
                 </Button>
             </div>
             <Board board={game} handleAction={handleUserAction} />
+            {game.gameOver === true && nextGame !== null &&
+                <div className="modal-action-confirm">
+                    <Button variant="outlined" handleAction={handleSetNextGame}>
+                        Puzzle suivant
+                    </Button>
+                </div>
+            }
             <GameRulesModal />
             <ThemeModal />
             <GameChoiceModal />

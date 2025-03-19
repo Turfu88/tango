@@ -94,7 +94,7 @@ body {
 .game-area {
     background-color: var(--white);
     border-radius: 15px;
-    height: 700px;
+    height: 720px;
     padding: 10px;
     -webkit-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.4);
     -moz-box-shadow: 0px 0px 4px 2px rgba(0, 0, 0, 0.4);
@@ -230,23 +230,23 @@ h1 {
 }
 
 .constraint-vertical-6 img {
-    top: calc((95vw - 20px) / 6 - 10px); /* (screen width - board padding (left + right)) / number of columns - 10px */
+    top: calc((95vw - 20px) / 6 - 16px); /* (screen width - board padding (left + right)) / number of columns - 16px */
     right: 0;
 }
 
 .constraint-horizontal-6 img {
-    top: calc((95vw - 20px) / 12 - 10px);
+    top: calc((95vw - 20px) / 12 - 15px);
     right: calc(((95vw - 20px) / 12 * -1) + 2px);
 }
 
 @media (min-width: 610px) {
     .constraint-vertical-6 img {
-        top: 78px;
+        top: 75px;
         right: 0;
     }
     .constraint-horizontal-6 img {
-        top: 37px;
-        right: -46px;
+        top: 30px;
+        right: -45px;
     }
     .virtual_constraints .constraint-vertical-6 img {
         top: calc((30vw) / 12 - -12px);
@@ -260,18 +260,18 @@ h1 {
 
 
 .constraint-vertical-4 img {
-    top: calc(78vw / 4);
+    top: calc((95vw - 20px) / 4 - 18px);
     right: 0;
 }
 
 .constraint-horizontal-4 img {
-    top: calc((95vw - 20px) / 8 - 10px);
+    top: calc((95vw - 20px) / 8 - 15px);
     right: calc(((95vw - 20px) / 8 * -1) + 2px);
 }
 
 @media (min-width: 610px) {
     .constraint-vertical-4 img {
-        top: 124px;
+        top: 120px;
         right: 0;
     }
     .constraint-horizontal-4 img {

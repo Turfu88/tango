@@ -9,7 +9,6 @@ export function GameBuilder() {
     const games_8x8 = BoardUtils.getSplitGames(games_list.grid_8x8, gamesPerPage);
 
     return (
-
         <div className="flex flex-col justify-center h-screen">
             <div className="bg-white rounded-lg border px-4 py-4 mx-6">
                 <p className='text-center mb-4 font-bold text-2xl'>Game builder</p>
@@ -23,7 +22,9 @@ export function GameBuilder() {
                                 {games.map((game, index) => (
                                     <div key={index} className="pb-2 flex justify-between items-center w-full">
                                         <p className="w-8">#{game.split('_')[2]}</p>
-                                        <Button className="primary">Jouer</Button>
+                                        <a href={`/?game=${game.replace('game_', '')}`}>
+                                            <Button className="primary">Jouer</Button>
+                                        </a>
                                     </div>
                                 ))}
                             </div>
@@ -38,7 +39,9 @@ export function GameBuilder() {
                                 {games.map((game, index) => (
                                     <div key={index} className="pb-2 flex justify-between items-center w-full">
                                         <p className="w-8">#{game.split('_')[2]}</p>
-                                        <Button className="primary">Jouer</Button>
+                                        <a href={`/?game=${game.replace('game_', '')}`}>
+                                            <Button className="primary">Jouer</Button>
+                                        </a>
                                     </div>
                                 ))}
                             </div>
@@ -53,7 +56,9 @@ export function GameBuilder() {
                                 {games.map((game, index) => (
                                     <div key={index} className="pb-2 flex justify-between items-center w-full">
                                         <p className="w-8">#{game.split('_')[2]}</p>
-                                        <Button className="primary">Jouer</Button>
+                                        <a href={`/?game=${game.replace('game_', '')}`}>
+                                            <Button className="primary">Jouer</Button>
+                                        </a>
                                     </div>
                                 ))}
                             </div>

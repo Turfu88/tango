@@ -10,7 +10,8 @@
         "game_4_8",
         "game_4_9",
         "game_4_10",
-        "game_4_11"
+        "game_4_11",
+        "game_4_12"
     ],
     "grid_6x6": [
         "game_6_1",
@@ -19,7 +20,17 @@
         "game_6_4",
         "game_6_5",
         "game_6_6",
-        "game_6_7"
+        "game_6_7",
+        "game_6_8",
+        "game_6_9",
+        "game_6_10",
+        "game_6_11",
+        "game_6_12",
+        "game_6_13",
+        "game_6_14",
+        "game_6_15",
+        "game_6_16",
+        "game_6_17"
     ],
     "grid_8x8": [
         "game_8_1",
