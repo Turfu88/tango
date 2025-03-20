@@ -60,10 +60,9 @@ export function GameArea() {
         dispatch({ action: 'search_errors' });
     }
 
-    function handleSetNextGame(): void {
-        console.log('set next game')
+    function handleSetNextGame(): void {    
         if (nextGame !== null) {
-            changeGame(nextGame);
+            window.location.replace('/?game=' + nextGame);
         }
     }
 

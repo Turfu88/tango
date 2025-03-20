@@ -19,7 +19,7 @@ export function getNextGame(): string | null {
     const currentGame = parseInt(gameFromUrl.split('_')[1]);
     const newGame = `game_${currentGrid}_${currentGame + 1}`;
     if (!gameExists(newGame)) return null;
-    return newGame;
+    return `${currentGrid}_${currentGame + 1}`;
 }
 
 export function setCurrentGame(game: string): void {
